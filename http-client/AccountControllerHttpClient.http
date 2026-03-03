@@ -1,0 +1,17 @@
+###
+POST http://localhost:8080/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "11400100100200300405555"
+}
+
+###
+
+GET http://localhost:8080/api/accounts/13500100100200300405
+
+###
+
+PATCH http://localhost:8080/api/accounts/13500100100200300405/update-status?
+    status=BLOCKED
+
