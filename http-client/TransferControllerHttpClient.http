@@ -1,6 +1,6 @@
 @amount = 500
 @senderAccountNumber = "10203810400000000005"
-@receiverAccountNumber = "10203810400000000005"
+@receiverAccountNumber = "10203810400000000001"
 
 ###
 POST http://localhost:8080/api/transfers/deposit
