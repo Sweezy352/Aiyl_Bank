@@ -1,0 +1,27 @@
+@accountNumber = 10203810400000000001
+
+###
+POST http://localhost:8080/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": {{accountNumber}}
+}
+
+###
+
+GET http://localhost:8080/api/accounts/13500100100200300405
+
+###
+
+PATCH http://localhost:8080/api/accounts/13500100100200300405/update-status?
+    status=BLOCKED
+
+
+###
+GET http://localhost:8080/api/accounts/{{accountNumber}}/statement?
+    from=2026-03-01T00:00:00&
+    to=2026-03-05T00:00:00&
+    page=1&
+    size=5
+

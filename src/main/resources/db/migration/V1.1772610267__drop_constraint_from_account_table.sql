@@ -1,0 +1,1 @@
+ALTER TABLE accounts DROP CONSTRAINT chk_balance_non_negative;
