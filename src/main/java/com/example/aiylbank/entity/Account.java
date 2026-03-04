@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "accounts")
@@ -29,6 +30,10 @@ public class Account extends BaseEntity{
     private LocalDateTime createdAt;
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+    @OneToMany(mappedBy = "senderAccount")
+    private List<TransactionEntity> sentTransactions;
+    @OneToMany(mappedBy = "receiverAccount")
+    private List<TransactionEntity> receivedTransactions;
 
     @PrePersist
     public void prePersist(){
