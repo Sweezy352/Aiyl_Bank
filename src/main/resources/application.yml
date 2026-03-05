@@ -19,8 +19,7 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
-    operations-sorter: method
-    tags-sorter: alpha
+
   info:
     title: AiylBank API
     description: API для управления банковскими счетами и транзакциями

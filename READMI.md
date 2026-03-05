@@ -39,12 +39,8 @@ AiylBank - это бэкэнд-сервис для управления банк
     git clone <URL_ВАШЕГО_РЕПОЗИТОРИЯ>
     cd aiylBank
     ```
-2.  **Соберите проект**:
-    ```bash
-    ./mvnw clean package -DskipTests
-    ```
-    Эта команда соберет JAR-файл приложения, который будет использоваться Docker-образом.
-3.  **Запустите Docker Compose**:
+    
+2. **Запустите Docker Compose**:
     ```bash
     docker compose up --build
     ```
