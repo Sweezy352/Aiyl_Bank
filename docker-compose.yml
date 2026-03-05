@@ -3,16 +3,14 @@ services:
     build: .
     container_name: aiyl_bank_app
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/aiyl_bank_database
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5434/aiyl_bank_database
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
-
     depends_on:
       - db
-
 
 
   db:

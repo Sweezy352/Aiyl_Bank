@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 public class SameAccountValidator implements TransferValidator{
     @Override
     public void validate(Account sender, Account receiver, BigDecimal amount) {
-        if(sender.getAccountNumber().equals(receiver.getAccountNumber())) throw new SameAccountNumberException("Sender and receiver cannot be the same account");
+        if(sender.getAccountNumber().equals(receiver.getAccountNumber()))
+            throw new SameAccountNumberException("Sender and receiver cannot be the same account");
     }
 }

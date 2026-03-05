@@ -28,22 +28,49 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     @Loggable
-    public TransactionEntity createSuccessTransaction(Account sender, Account receiver, BigDecimal amount, BigDecimal balanceAfterOp ,OperationType type) {
-        TransactionEntity transaction = transactionMapper.toEntity(sender, receiver, amount, balanceAfterOp ,type ,TransactionStatus.SUCCESS, null);
+    public TransactionEntity createSuccessTransaction(Account sender,
+                                                      Account receiver,
+                                                      BigDecimal amount,
+                                                      BigDecimal balanceAfterOp,
+                                                      OperationType type) {
+        TransactionEntity transaction = transactionMapper.toEntity(
+                sender,
+                receiver,
+                amount,
+                balanceAfterOp,
+                type,
+                TransactionStatus.SUCCESS,
+                null
+        );
         return transactionRepository.save(transaction);
     }
 
     @Override
     @Transactional(value = Transactional.TxType.REQUIRES_NEW)
     @Loggable
-    public TransactionEntity createFailedTransaction(Account sender, Account receiver, BigDecimal amount, BigDecimal balanceAfterOp ,OperationType type,String failureReason) {
-        TransactionEntity transaction = transactionMapper.toEntity(sender, receiver, amount, balanceAfterOp ,type, TransactionStatus.FAILED, failureReason);
+    public TransactionEntity createFailedTransaction(
+            Account sender,
+            Account receiver,
+            BigDecimal amount,
+            BigDecimal balanceAfterOp,
+            OperationType type,
+            String failureReason
+    ) {
+        TransactionEntity transaction = transactionMapper.toEntity(
+                sender,
+                receiver,
+                amount,
+                balanceAfterOp,
+                type,
+                TransactionStatus.FAILED,
+                failureReason);
         return transactionRepository.save(transaction);
     }
 
     @Override
     public TransactionEntity findById(Long id) {
-        return transactionRepository.findById(id).orElseThrow(() -> new TransactionNotFoundException("Transaction not found"));
+        return transactionRepository.findById(id)
+                .orElseThrow(() -> new TransactionNotFoundException("Transaction not found"));
     }
 
     @Override
