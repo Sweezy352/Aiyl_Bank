@@ -1,6 +1,9 @@
+server:
+  port: ${SERVER_PORT:8081}
+
 spring:
   application:
-    name:aiylBank
+    name: aiylBank
   profiles:
     active: ${PROFILE:dev}
 
@@ -10,3 +13,16 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  info:
+    title: AiylBank API
+    description: API для управления банковскими счетами и транзакциями
+    version: 1.0.0
+

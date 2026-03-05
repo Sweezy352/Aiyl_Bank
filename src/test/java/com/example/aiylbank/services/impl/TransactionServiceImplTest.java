@@ -28,7 +28,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 class TransactionServiceImplTest {
 
@@ -81,7 +80,7 @@ class TransactionServiceImplTest {
     }
 
     @Test
-    void createSuccessTransaction_shouldMapAndSaveTransaction() {
+    void createSuccessTransaction_shouldMapAndSaveTransaction_OK() {
         when(transactionMapper.toEntity(any(Account.class), any(Account.class), any(BigDecimal.class), any(BigDecimal.class), any(OperationType.class), eq(TransactionStatus.SUCCESS), eq(null)))
                 .thenReturn(successTransaction);
         when(transactionRepository.save(any(TransactionEntity.class))).thenReturn(successTransaction);
@@ -95,7 +94,7 @@ class TransactionServiceImplTest {
     }
 
     @Test
-    void createFailedTransaction_shouldMapAndSaveTransaction() {
+    void createFailedTransaction_shouldMapAndSaveTransaction_OK() {
         when(transactionMapper.toEntity(any(Account.class), any(Account.class), any(BigDecimal.class), any(BigDecimal.class), any(OperationType.class), eq(TransactionStatus.FAILED), anyString()))
                 .thenReturn(failedTransaction);
         when(transactionRepository.save(any(TransactionEntity.class))).thenReturn(failedTransaction);
@@ -110,7 +109,7 @@ class TransactionServiceImplTest {
     }
 
     @Test
-    void findById_shouldReturnTransaction_whenFound() {
+    void findById_shouldReturnTransaction_whenFound_OK() {
         when(transactionRepository.findById(1L)).thenReturn(Optional.of(successTransaction));
 
         TransactionEntity result = transactionService.findById(1L);
@@ -121,7 +120,7 @@ class TransactionServiceImplTest {
     }
 
     @Test
-    void findById_shouldThrowTransactionNotFoundException_whenNotFound() {
+    void findById_shouldThrowTransactionNotFoundException_whenNotFound_ERROR() {
         when(transactionRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThrows(TransactionNotFoundException.class, () -> transactionService.findById(99L));
@@ -129,7 +128,7 @@ class TransactionServiceImplTest {
     }
 
     @Test
-    void getStatement_shouldReturnListOfTransactions() {
+    void getStatement_shouldReturnListOfTransactions_OK() {
         LocalDateTime from = LocalDateTime.now().minusDays(7);
         LocalDateTime to = LocalDateTime.now();
         Pageable pageable = Pageable.unpaged();

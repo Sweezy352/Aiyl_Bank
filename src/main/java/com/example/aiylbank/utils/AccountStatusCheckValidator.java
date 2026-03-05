@@ -11,7 +11,9 @@ import java.math.BigDecimal;
 public class AccountStatusCheckValidator implements TransferValidator{
     @Override
     public void validate(Account sender, Account receiver, BigDecimal amount) {
-        if (sender.getStatus().equals(AccountStatus.BLOCKED)) throw new AccountIsBlockedException("Sender account is blocked");
-        if (receiver.getStatus().equals(AccountStatus.BLOCKED)) throw new AccountIsBlockedException("Receiver account is blocked");
+        if (sender.getStatus().equals(AccountStatus.BLOCKED))
+            throw new AccountIsBlockedException("Sender account is blocked");
+        if (receiver.getStatus().equals(AccountStatus.BLOCKED))
+            throw new AccountIsBlockedException("Receiver account is blocked");
     }
 }

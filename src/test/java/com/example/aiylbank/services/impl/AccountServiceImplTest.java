@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 class AccountServiceImplTest {
 
@@ -41,7 +40,7 @@ class AccountServiceImplTest {
     }
 
     @Test
-    void createAccount_shouldSaveAndReturnAccount() {
+    void createAccount_shouldSaveAndReturnAccount_OK() {
         when(accountRepository.save(any(Account.class))).thenReturn(testAccount);
 
         Account createdAccount = accountService.createAccount(new Account());
@@ -52,7 +51,7 @@ class AccountServiceImplTest {
     }
 
     @Test
-    void getAccountByAccountNumber_shouldReturnAccount_whenFound() {
+    void getAccountByAccountNumber_shouldReturnAccount_whenFound_OK() {
         when(accountRepository.findByAccountNumber("1234567890")).thenReturn(Optional.of(testAccount));
 
         Account foundAccount = accountService.getAccountByAccountNumber("1234567890");
@@ -63,7 +62,7 @@ class AccountServiceImplTest {
     }
 
     @Test
-    void getAccountByAccountNumber_shouldThrowAccountNotFoundException_whenNotFound() {
+    void getAccountByAccountNumber_shouldThrowAccountNotFoundException_whenNotFound_ERROR() {
         when(accountRepository.findByAccountNumber("nonExistent")).thenReturn(Optional.empty());
 
         assertThrows(AccountNotFoundException.class, () -> accountService.getAccountByAccountNumber("nonExistent"));
@@ -71,7 +70,7 @@ class AccountServiceImplTest {
     }
 
     @Test
-    void updateStatus_shouldUpdateAndReturnAccount() {
+    void updateStatus_shouldUpdateAndReturnAccount_OK() {
         Account updatedAccount = new Account();
         updatedAccount.setId(1L);
         updatedAccount.setAccountNumber("1234567890");
@@ -90,7 +89,7 @@ class AccountServiceImplTest {
     }
 
     @Test
-    void updateStatus_shouldThrowAccountNotFoundException_whenAccountNotFound() {
+    void updateStatus_shouldThrowAccountNotFoundException_whenAccountNotFound_ERROR() {
         when(accountRepository.findByAccountNumber("nonExistent")).thenReturn(Optional.empty());
 
         assertThrows(AccountNotFoundException.class, () -> accountService.updateStatus("nonExistent", "BLOCKED"));

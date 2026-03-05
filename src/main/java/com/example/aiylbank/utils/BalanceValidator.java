@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 public class BalanceValidator implements TransferValidator{
     @Override
     public void validate(Account sender, Account receiver, BigDecimal amount) {
-        if (sender.getBalance().compareTo(amount) < 0) throw new InsufficientFundsException("Not enough money");
+        if (sender.getBalance().compareTo(amount) < 0)
+            throw new InsufficientFundsException("Not enough money");
     }
 }

@@ -3,7 +3,7 @@
 @receiverAccountNumber = "10203810400000000001"
 
 ###
-POST http://localhost:8080/api/transfers/deposit
+POST http://localhost:8081/api/transfers/deposit
 Content-Type: application/json
 
 {
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 
 ###
-POST http://localhost:8080/api/transfers/transfer
+POST http://localhost:8081/api/transfers/transfer
 Content-Type: application/json
 
 {

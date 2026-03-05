@@ -1,11 +1,11 @@
-SELECT accound_id, COUNT(*) AS total_transactions
+SELECT account_id, COUNT(*) AS total_transactions
 FROM (
-    SELECT sender_account_id AS accound_id FROM transactions
+    SELECT sender_account_id AS account_id FROM transactions
     WHERE created_at > now() - INTERVAL '1 month' AND sender_account_id IS NOT NULL UNION ALL
     SELECT receiver_account_id AS account_id FROM transactions
     WHERE created_at > now() - INTERVAL '1 month' AND receiver_account_id IS NOT NULL
      ) AS all_activity
-GROUP BY accound_id
+GROUP BY account_id
 ORDER BY total_transactions DESC
 LIMIT 5;
 

@@ -33,15 +33,33 @@ public class TransferServiceImpl implements TransferService {
     @Transactional
     @Loggable
     public TransactionEntity deposit(TransactionDtoRequest request) {
-        Account receiver = accountRepository.findByAccountNumber(request.getReceiverAccountNumber()).orElseThrow(() -> new AccountNotFoundException("Receiver account not found"));
+        Account receiver = accountRepository.findByAccountNumber(request.getReceiverAccountNumber())
+                .orElseThrow(() -> new AccountNotFoundException("Receiver account not found"));
         try {
-            log.info("Started depositing money with amount: {}, to account: {}", request.getAmount(), request.getReceiverAccountNumber());
+            log.info("Started depositing money with amount: {}, to account: {}",
+                    request.getAmount(),
+                    request.getReceiverAccountNumber());
+
             receiver.setBalance(receiver.getBalance().add(request.getAmount()));
             accountRepository.save(receiver);
-            return transactionService.createSuccessTransaction(null, receiver, request.getAmount(), receiver.getBalance() ,OperationType.DEPOSIT);
+
+            return transactionService.createSuccessTransaction(
+                    null,
+                    receiver,
+                    request.getAmount(),
+                    receiver.getBalance(),
+                    OperationType.DEPOSIT
+            );
         }catch (Exception ex){
             log.error("Error depositing money", ex);
-            return transactionService.createFailedTransaction(null, receiver, request.getAmount(), receiver.getBalance() ,OperationType.DEPOSIT, ex.getMessage());
+            return transactionService.createFailedTransaction(
+                    null,
+                    receiver,
+                    request.getAmount(),
+                    receiver.getBalance(),
+                    OperationType.DEPOSIT,
+                    ex.getMessage()
+            );
         }
     }
 
@@ -49,22 +67,47 @@ public class TransferServiceImpl implements TransferService {
     @Transactional
     @Loggable
     public TransactionEntity transfer(TransactionDtoRequest request) {
-        Account sender = accountRepository.findByAccountNumber(request.getSenderAccountNumber()).orElseThrow(() -> new AccountNotFoundException("Sender account not found"));
-        Account receiver = accountRepository.findByAccountNumber(request.getReceiverAccountNumber()).orElseThrow(() -> new AccountNotFoundException("Receiver account not found"));
+        Account sender = accountRepository.findByAccountNumber(request.getSenderAccountNumber())
+                .orElseThrow(() -> new AccountNotFoundException("Sender account not found"));
+        Account receiver = accountRepository.findByAccountNumber(request.getReceiverAccountNumber())
+                .orElseThrow(() -> new AccountNotFoundException("Receiver account not found"));
 
         try {
-            log.info("Started transferring money with amount: {}, from account: {} to account: {}", request.getAmount(), request.getSenderAccountNumber(), request.getReceiverAccountNumber());
+            log.info("Started transferring money with amount: {}, from account: {} to account: {}",
+                    request.getAmount(),
+                    request.getSenderAccountNumber(),
+                    request.getReceiverAccountNumber());
+
             transferValidators.forEach(validator -> validator.validate(sender, receiver, request.getAmount()));
             sender.setBalance(sender.getBalance().subtract(request.getAmount()));
             receiver.setBalance(receiver.getBalance().add(request.getAmount()));
+
             accountRepository.save(sender);
             accountRepository.save(receiver);
-            TransactionEntity transaction = transactionService.createSuccessTransaction(sender, receiver, request.getAmount(), sender.getBalance() ,OperationType.TRANSFER);
-            log.info("Finished transferring money with amount: {}, from account: {} to account: {}", request.getAmount(), request.getSenderAccountNumber(), request.getReceiverAccountNumber());
+
+            TransactionEntity transaction = transactionService.createSuccessTransaction(
+                    sender,
+                    receiver,
+                    request.getAmount(),
+                    sender.getBalance(),
+                    OperationType.TRANSFER
+            );
+            log.info("Finished transferring money with amount: {}, from account: {} to account: {}",
+                    request.getAmount(),
+                    request.getSenderAccountNumber(),
+                    request.getReceiverAccountNumber());
+
             return transaction;
         }catch (Exception ex){
             log.error("Error transferring money", ex);
-            return transactionService.createFailedTransaction(sender, receiver, request.getAmount(), sender.getBalance() ,OperationType.TRANSFER, ex.getMessage());
+            return transactionService.createFailedTransaction(
+                    sender,
+                    receiver,
+                    request.getAmount(),
+                    sender.getBalance(),
+                    OperationType.TRANSFER,
+                    ex.getMessage()
+            );
         }
     }
 }

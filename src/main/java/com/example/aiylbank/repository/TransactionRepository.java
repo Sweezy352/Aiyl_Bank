@@ -14,7 +14,12 @@ import java.util.Optional;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
-    @Query("select t from TransactionEntity t where (t.senderAccount.accountNumber = :accNum or t.receiverAccount.accountNumber = :accNum) and t.createdAt between :from and :to")
-    Page<TransactionEntity> getStatement(@Param("accNum") String accountNumber, @Param("from") LocalDateTime from, @Param("to") LocalDateTime to, Pageable pageable);
-
+    @Query("select t from TransactionEntity t where " +
+            "(t.senderAccount.accountNumber = :accNum or t.receiverAccount.accountNumber = :accNum)" +
+            " and t.createdAt between :from and :to")
+    Page<TransactionEntity> getStatement(
+            @Param("accNum") String accountNumber,
+            @Param("from") LocalDateTime from,
+            @Param("to") LocalDateTime to, Pageable pageable
+    );
 }
