@@ -36,8 +36,8 @@ AiylBank - это бэкэнд-сервис для управления банк
 
 1.  **Клонируйте репозиторий**:
     ```bash
-    git clone <URL_ВАШЕГО_РЕПОЗИТОРИЯ>
-    cd aiylBank
+    git clone https://github.com/Sweezy352/Aiyl_Bank.git
+    cd Aiyl_Bank
     ```
     
 2. **Запустите Docker Compose**:
